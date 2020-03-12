@@ -1,0 +1,174 @@
+body * {
+  box-sizing: border-box;
+  margin: 0 auto;
+  
+
+}
+
+h1{
+  margin: 1em;
+}
+
+main{
+display: flex;
+flex-direction: column;
+font-family: 'Raleway', sans-serif;
+text-align: center;
+width: 390px;
+background-image: linear-gradient(to bottom right,  #8e9eab,#eef2f3 );
+}
+
+#section1 {
+text-align: center;
+padding-left: .8em;
+padding-right: .8em;
+padding-bottom: 1em;
+font-size: 20px;
+margin-bottom: 8em;
+
+
+}
+
+#section2 {
+text-align: center;
+margin-bottom:3em;
+}
+
+.location-query{
+  text-align: center;
+  width: 180px;
+  border-radius: 3px;
+}
+
+
+button {
+  border: solid white 3px;
+  background-color: white;
+  width: 180px;
+  height: 50px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  margin: 0 auto;
+  border-radius: 3px;
+}
+
+button a {
+  text-decoration: none;
+  position: relative;
+  transition: all .1s ease-Out;
+  color: black;
+ 
+  
+}
+
+#slide {
+  width: 100%;
+  height: 100%;
+  left: -200%;
+  background: black;
+  position: absolute;
+  transition: all .5s ease-Out;
+  bottom: 0;
+ 
+}
+
+button:hover #slide {
+  left: 0;
+  color: white;
+}
+
+button:hover button {
+  color: white
+}
+
+
+
+#section3 {
+display: flex;
+justify-content: center;
+margin-bottom:3em;
+
+}
+
+.forecastImage {
+display: flex;
+flex-direction: column; 
+justify-content: space-around;
+padding-right:1em;
+
+
+
+}
+
+.imageForecast{
+border: 3px solid #ddd;
+border-radius: 3px;
+padding: 1px;
+}
+
+
+
+.forecastList{
+  text-align: left;
+ 
+}
+
+.forcastListTitle{
+    font-weight: 900;
+}
+
+.activity-photo{
+  width:15em;
+  height: 9em;
+  
+  margin:0 auto;
+}
+
+#duckDetails{
+  font-weight: 900;
+  text-decoration: none;
+  position: relative;
+  transition: all .1s ease-Out;
+  color: black;
+ }
+
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+/** list formatting **/
+.list{
+width:280px;
+margin:0 auto;
+}
+
+.list ul{
+counter-reset: li;
+list-style: none;
+*list-style: decimal;
+font-size: 15px;
+font-family: 'Raleway', sans-serif;
+padding: 0;
+margin-bottom: 4em;
+
+}
+.list li{
+position: relative;
+display: flex;
+flex-direction: column;
+padding: .4em;
+margin: .5em 0;
+background: skyblue;
+color:rgb(38, 38, 38);
+text-decoration: none;
+box-shadow:inset 1em 0 rgba(43, 43, 134, 0.733);
+-webkit-transition: box-shadow .2s; /* For Safari 3.1 to 6.0 */
+transition: box-shadow .2s;
+border-radius: 3px;
+}
+
+.list li:hover{
+box-shadow:inset 2em 0 rgba(43, 43, 134, 0.733);
+}
