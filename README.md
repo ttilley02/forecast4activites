@@ -18,3 +18,6 @@ a Duckduckgo search on places nearby to do said activity.
 ----Technologies Used----
 
 HTML,CSS,Jquery,Javascript
+
+![](img/screenshot1.JPG) 
+![](img/screenshot2.JPG)
