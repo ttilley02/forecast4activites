@@ -19,5 +19,7 @@ a Duckduckgo search on places nearby to do said activity.
 
 HTML,CSS,Jquery,Javascript
 
+## Sreenshots
+
 ![](img/screenshot1.JPG) 
 ![](img/screenshot2.JPG)
