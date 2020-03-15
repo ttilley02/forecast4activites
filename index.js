@@ -1,7 +1,7 @@
 'use strict';
 
 //Global Variable to how response outputs
-let activityStorage= {
+let store= {
   activities : [
     {
     isDaytime: "both",  
@@ -155,41 +155,36 @@ let activityStorage= {
   locationGlobal: "place"
   
 
-  }
-
-
-let doableActivities=[];
-let locationGlobal;
-let forecastOverview;
+  };
 
 //Test against weather properties
 function canIDoIt(tempNum,windNum,timeOfDay,precipNum){
   
   
   
-  activityStorage.ableActivities = [];
+  store.ableActivities = [];
     
-  activityStorage.ableActivities.length = 0;
-  for(let i = 0 ; i < activityStorage.activities.length; i++)
+  store.ableActivities.length = 0;
+  for(let i = 0 ; i < store.activities.length; i++)
   {
-    if(tempNum >= activityStorage.activities[i].temperature && precipNum <= activityStorage.activities[i].probabilityOfPrecipitation && 
-      windNum <= activityStorage.activities[i].windSpeed && timeOfDay == activityStorage.activities[i].isDaytime)
+    if(tempNum >= store.activities[i].temperature && precipNum <= store.activities[i].probabilityOfPrecipitation && 
+      windNum <= store.activities[i].windSpeed && timeOfDay == store.activities[i].isDaytime)
     {
-      activityStorage.ableActivities.push(activityStorage.activities[i]);
+      store.ableActivities.push(store.activities[i]);
       
     }
-    if(tempNum >= activityStorage.activities[i].temperature && precipNum <= activityStorage.activities[i].probabilityOfPrecipitation && 
-      windNum <= activityStorage.activities[i].windSpeed && activityStorage.activities[i].isDaytime == "both")
+    if(tempNum >= store.activities[i].temperature && precipNum <= store.activities[i].probabilityOfPrecipitation && 
+      windNum <= store.activities[i].windSpeed && store.activities[i].isDaytime == "both")
     {
-      activityStorage.ableActivities.push(activityStorage.activities[i]);
+      store.ableActivities.push(store.activities[i]);
       
-    }
+    };
   
-  }
+  };
    
 
-   populateActivityDetails(activityStorage.ableActivities);
-}
+   populateActivityDetails(store.ableActivities);
+};
 
 //Updates Dom with confirmation of being able to do something
 function compareWeather(responseJson) {
@@ -203,15 +198,15 @@ function compareWeather(responseJson) {
     
        
   
-  canIDoIt(temp,convertedWind,timeOfDay,activityStorage.windRain[0]);
-  })
-}
+  canIDoIt(temp,convertedWind,timeOfDay,store.windRain[0]);
+  });
+};
 
 // pushes probabilityOfPrecipitation to a separate array as its the only qualifer pulled from a different fetch
 function precip(precip){
-     activityStorage.windRain.push(precip);
+     store.windRain.push(precip);
      
-}
+};
 
 //First initial fetch that pulls National Weather Service main response object holding both hourly forecast and other weather grid data
 
@@ -229,9 +224,14 @@ function getWeather(coords) {
       .then(
         responseJson => getPrecipOdds(responseJson.properties.forecastGridData)
        )
+        .then(
+        responseJson => getForecastHourlyData(url)
+       )
       .catch(err => {
           displayError(err.message);
        });
+}
+function getForecastHourlyData(url) {
   fetch(url)
       .then(response => 
         {
@@ -247,8 +247,8 @@ function getWeather(coords) {
       .catch(err => {
           displayError(err.message);
        });        
-       
-} 
+}   
+ 
 
 //Gets actual weather properties to examine
 function getPrecipOdds(newUrl)  {
@@ -267,7 +267,7 @@ fetch(newUrl)
   .catch(err => {
     displayError(err.message);
   });
-}
+};
 
 //API call to National Weather Service for hourly forecast object and other weather grid data to compare
 
@@ -302,7 +302,7 @@ fetch(newUrl2)
   .catch(err => {
     displayError(err.message);
   });        
-}
+};
 
 //Creates forecast HTML from the National Weather Service API for hourly forecast
 
@@ -318,7 +318,7 @@ function populateForecast(forecastResponse){
   <br>Looks like: ${forecastResponse.properties.periods[0].shortForecast}
  </p>`)
   
-}
+};
 
 //Populates list for activities
 
@@ -332,13 +332,13 @@ function populateActivityDetails(array){
   `
   <li class="doableActivity" tabindex="0">${array[i].activity}
   <img class='hidden' src=${array[i].image} alt= "image of ${array[i].activity}" >
-  <div class="hidden duckDetails"><a href='https://duckduckgo.com/?t=ffab&q=${array[i].activity}+${activityStorage.locationGlobal}&ia=places' target="_blank" > ${array[i].activity.replace("_", " ")} in the area </div>
+  <div class="hidden duckDetails"><a href='https://duckduckgo.com/?t=ffab&q=${array[i].activity}+${store.locationGlobal}&ia=places' target="_blank" > ${array[i].activity.replace("_", " ")} in the area </div>
   </li>
   `
     )
  
-  } 
-}
+  };
+};
 
 
 
@@ -350,19 +350,19 @@ function handleItemCheckClicked() {
     $(e.target).find('img').toggleClass('hidden');
     $(e.target).find('div').toggleClass('hidden');
     
-  })
-}
+  });
+};
 
 function hitEnterButton(){
   $('#listStuff').keypress(function (e) {
-  var key = e.which;
+  let key = e.which;
   if(key == 13) 
     {
     $(e.target).find('img').toggleClass('hidden');
     $(e.target).find('div').toggleClass('hidden');
     }
   });  
-}
+};
 
 
 //takes value from user query to convert to coords for weather API
@@ -372,14 +372,13 @@ function locationQuery() {
      event.preventDefault();
      
     let query = $('.location-query').val();
-    activityStorage.locationGlobal=query;
+    store.locationGlobal=query;
     $('.location-query').val('');
-    
-
+    $('.forecast').append(`<div class="loader"></div> `);
     queryBasedCoords(query);
 
   });
-}
+};
 
 //BING API fetch call to serach location entered by user.
 function queryBasedCoords(query) {
@@ -391,26 +390,30 @@ function queryBasedCoords(query) {
   .then(function(response) {
         coordsFormat(response.resourceSets[0].resources[0].point.coordinates);
     })
-  .catch(function(error){alert("Did you enter anything? Or maybe a fiction place?  No results found!");});
+  .catch(err => {
+          displayError(err.message);
+       });
 
-}
+};
 
 //converts coordinate Array from Bing API into usable string for National Weather Service API
 
 function coordsFormat(bingArray){
-  let newstring= []
+  let newstring= [];
   let decimals1 = bingArray[0].toFixed(3);
   let decimals2 = bingArray[1].toFixed(3);
   newstring.push(decimals1,decimals2);
   getWeather(newstring);
   
-}
+};
 
 //Error condition
 
 function displayError(error) {
-  console.log('displayError ran: '+ error);
-}
+   $('#listStuff').empty("");
+   $('.forecast').empty("");
+   $('#listStuff').append(`<p class="errorMessage"> Looks like you entered an invalid place or the forecast may not be available at this time.  Please try again later and remember to use a city in combination with a state code or a valid zip code!</p>`);
+};
 
 
 

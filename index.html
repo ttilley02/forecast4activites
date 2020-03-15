@@ -13,34 +13,46 @@
 
 <body>
     <main>
+      
+  
     <h1>Weather & Activities</h1>
+    
     <section id='section1' class='landingPage'>
+      <fieldset>
         <p id=descriptionOfService>
-           Lets check the weather in your area and figure out ideal conditions for some things to do! <br><br>Get started by searching a location and we will do the rest below.  Use the left toggles on the list to see the acitivity card. To search again just type in a new location!
+           Lets check the weather in your area and figure out ideal conditions for some things to do!  Powered by the National Weather Service. <br><br>Get started by searching a location and we will do the rest!  Use the left toggles on the list to see the acitivity card. To search again just type in a new location!
         </p>
+      </fieldset>
+    
     </section>
+    
     <section id='section2' class="forecastPage">
         
         <form id="js-form" class="search-form css-search" >
             <label id="LocationSearch"></label>         
-            <input type="text" name="location" class="location-query" placeholder="City and State or Zipcode">
+            <div class='rotate'>
+            <input type="text" name="location" class="location-query" placeholder="ex: New York, NY or 10458">
+            </div>
             <br>
-            <br>
-            <button type="submit">LETS GO!</button>
+            <button type="submit" id='slide'>LETS GO!</button>
         </form>
-        
     </section>
+    
+    <div class='loading'>
     <section id='section3' class='forecast'>
+       
     
     </section>
+    
     <section id='section4' class='activitiesList'>
       <div class="list">
         <ul id='listStuff'>
         </ul>
       </div>  
     </section>
-
-    </main>
+    
+  </div>
+  </div>
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
