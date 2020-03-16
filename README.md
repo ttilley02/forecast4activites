@@ -1,6 +1,6 @@
 # WEATHER ACTIVITIES API HACK Rev3 3/7/2020
 
-https://ttilley02.github.io/Weather_and_Activities/
+https://ttilley02.github.io/forecast4activites/
 
 ## Objective
 To access multiple API and assist the user in finding out/suggesting which activities they can do given the weather
